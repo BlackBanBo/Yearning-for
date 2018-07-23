@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sinocat.mapper.CarMapper">
+	<select id="findAll" resultType="com.sinocat.entity.Car">
+		SELECT c_id,parent_id,c_type,c_discharge FROM car
+	</select>
+	
+	<select id="findByParentId" parameterType="int" resultType="com.sinocat.entity.Car">
+		SELECT c_id,parent_id,c_type,c_discharge FROM car WHERE parent_id = #{parent_id}
+	</select>
+	
+</mapper>

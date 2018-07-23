@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sinocat.mapper.UserMapper">
+
+	<select id="findAll" resultType="com.sinocat.entity.User">
+		SELECT * FROM `user`
+	</select>
+
+	
+	<insert id="addUser" parameterType="com.sinocat.entity.User">
+		insert into user (u_id,u_password,u_name,u_weuxin_key,u_phone) values (#{u_id},#{u_password},#{u_name},#{u_weuxin_key},#{u_phone})
+	</insert>
+	
+	<select id="findUserByPhone" parameterType="String" resultType="com.sinocat.entity.User">
+		select  * from user where u_phone=#{u_phone}
+	</select>
+	
+	<update id="updatePasswordByPhone" parameterType="com.sinocat.entity.User">
+		update user set u_password=#{u_password} where  u_phone=#{u_phone}
+	</update>
+	
+	<update id="updateUserById" parameterType="com.sinocat.entity.User"> 
+		update user set u_password=#{u_password},u_name=#{u_name},u_weuxin_key=#{u_weuxin_key},u_phone=#{u_phone} where  u_id=#{u_id}
+	</update>
+	
+	<update id="updatePasswordById" parameterType="com.sinocat.entity.User">
+		update user set u_password=#{u_password} where  u_id=#{u_id}
+	</update>
+	
+</mapper>

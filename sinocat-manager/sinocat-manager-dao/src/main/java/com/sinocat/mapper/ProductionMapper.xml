@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sinocat.mapper.ProductionMapper">
+	  <resultMap type="production" id="productionMap">
+		<id property="id" column="p_id"/>
+		<result property="name" column="p_name"/>
+		<result property="price" column="p_price"/>
+		<result property="image" column="p_image"/>
+		<result property="content" column="p_content"/>
+		<result property="weight" column="p_weight"/>
+		<association property="productionType" javaType="productionType">
+			<id property="id" column="pt_id"/>
+			<result property="type" column="product_type"/>
+		</association>
+		<association property="productionSystem" javaType="productionSystem">
+			<result property="id" column="ps_id"/>
+			<result property="system" column="system_type"/>
+		</association>
+		  
+	</resultMap>
+	
+	<select id="getProductionList" resultMap="productionMap" >
+		SELECT p_id,p_name,p_price,p_image,p_content,pt_id,p_weight,ps_id FROM production
+	</select>
+	<select id="getProdutionListByCarId" parameterType="int" resultMap="productionMap" >
+		SELECT p_id,p_name,p_price,p_image,p_content,pt_id,p_weight,ps_id FROM production where  production.p_id IN (SELECT p_id FROM car_production WHERE c_id=#{id})
+	</select>
+	
+	<select id="getProdutionInfoByProductionId" parameterType="int" resultMap="productionMap" >
+		SELECT production.p_id,p_name,p_price,p_image,p_content,production.pt_id,p_weight,production.ps_id,system_type,product_type  
+		FROM production,production_system,production_type 
+		WHERE production.ps_id=production_system.ps_id AND production_type.pt_id=production.pt_id 
+		AND  production.p_id=#{id}
+	</select>
+	
+	
+	<select id="getProdutionByProductionIdList"  parameterType="list" resultMap="productionMap" >
+		SELECT p_id,p_name,p_price,p_image,p_content,pt_id,p_weight,ps_id FROM production WHERE  
+		production.p_id IN  <foreach collection="list" item="id" index="index"
+            open="(" close=")" separator=",">
+            	#{id}
+            </foreach>
+	</select>
+	
+</mapper>

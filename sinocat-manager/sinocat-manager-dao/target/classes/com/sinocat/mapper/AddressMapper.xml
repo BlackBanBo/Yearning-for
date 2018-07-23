@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sinocat.mapper.AddressMapper">
+
+    <select id="findAll" parameterType="String" resultType="com.sinocat.entity.Address">
+      select * from address where u_id=#{u_id}
+    </select>
+	
+	<insert id="insert" parameterType="com.sinocat.entity.Address">
+		insert into Address (,a_address,u_id,a_type) values (#{a_address},#{u_id},#{a_type})
+	</insert>
+		
+	<update id="update" parameterType="com.sinocat.entity.Address">
+		update address set a_address=#{a_address} where u_id=#{u_id} and a_id=#{a_id}
+	</update>
+	
+	<delete id="delete" parameterType="com.sinocat.entity.Address">
+	 delete address where u_id=#{u_id} and a_id=#{a_id}
+	</delete>
+	
+</mapper>
+

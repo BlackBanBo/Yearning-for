@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+http://code.alibabatech.com/schema/dubbo    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">  
+    <dubbo:application name="sinocat-consumer-user" />  
+  
+    <!-- <dubbo:registry address="zookeeper://localhost:2181" />   -->
+	<dubbo:registry address="zookeeper://204.44.90.27:2181" />
+  
+    <!-- 向注册中心订阅服务 -->  
+    <dubbo:reference id="userService" interface="com.sinocat.service.UserService" />  
+    <dubbo:reference id="menuService" interface="com.sinocat.service.MenuService" />  
+    <dubbo:reference id="carService" interface="com.sinocat.service.CarService" />
+    <dubbo:reference id="productionService" interface="com.sinocat.service.ProductionService" />
+    <dubbo:reference id="orderService" interface="com.sinocat.service.OrderService" />
+    <dubbo:reference id="mogoService" interface="com.sinocat.service.MogoService" />
+</beans> 

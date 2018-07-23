@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd ">  
+    <dubbo:application name="sinocat-provider-user" />  
+    <!-- zookeeper注册中心   -->
+    <!-- <dubbo:registry address="zookeeper://192.168.1.86:2181" />  --> 
+    <dubbo:registry address="zookeeper://localhost:2181" />  
+    <dubbo:protocol name="dubbo" port="20881" />  
+      
+    <!-- 和本地bean一样实现服务 -->   
+    <bean id="userService" class="com.sinocat.service.impl.UserServiceImpl"/>  
+    <!-- 向注册中心注册暴漏服务地址,注册服务  --> 
+    <dubbo:service interface="com.sinocat.service.UserService" ref="userService" executes="10" />  
+</beans>

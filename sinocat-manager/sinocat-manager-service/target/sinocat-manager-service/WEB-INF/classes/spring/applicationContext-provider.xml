@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd ">
+	<dubbo:application name="sinocat-provider-user" />
+	<!-- zookeeper注册中心 -->
+	<!-- <dubbo:registry address="zookeeper://localhost:2181" /> -->
+	<dubbo:registry address="zookeeper://204.44.90.27:2181" />
+	<dubbo:protocol name="dubbo" port="20881" />
+	<!-- 和本地bean一样实现服务 -->
+	<bean id="userService" class="com.sinocat.service.impl.UserServiceImpl" />
+	<bean id="menuService" class="com.sinocat.service.impl.MenuServiceImpl" />
+	<bean id="carService" class="com.sinocat.service.impl.CarServiceImpl" />
+	<bean id="productionService" class="com.sinocat.service.impl.ProductionImp" />
+	<bean id="orderService" class="com.sinocat.service.impl.OrderServiceImp" />
+	<bean id="mogoService" class="com.sinocat.service.impl.MogoServiceImpl" />
+
+	<!-- 向注册中心注册暴漏服务地址,注册服务 -->
+	<dubbo:service interface="com.sinocat.service.UserService"
+		ref="userService" executes="10" timeout="300000" />
+
+	<dubbo:service interface="com.sinocat.service.MenuService"
+		ref="menuService" executes="10" timeout="300000" />
+
+	<dubbo:service interface="com.sinocat.service.CarService"
+		ref="carService" executes="10" timeout="300000" />
+	<dubbo:service interface="com.sinocat.service.ProductionService"
+		ref="productionService" executes="10" timeout="300000" />
+	
+	<dubbo:service interface="com.sinocat.service.OrderService"
+		ref="orderService" executes="10" timeout="300000" />
+		
+	<dubbo:service interface="com.sinocat.service.MogoService"
+		ref="mogoService" executes="10" timeout="300000" />
+
+</beans>

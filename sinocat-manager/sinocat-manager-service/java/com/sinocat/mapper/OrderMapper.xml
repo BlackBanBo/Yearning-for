@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sinocat.mapper.OrderMapper">
+	<resultMap type="Address" id="AddressMap">
+	<id property="id" column="a_id"/>
+	<result property="address" column="a_address"/>
+	<result property="type" column="a_type"/>
+	<association property="user" resultMap="UserMap"/>		
+	</resultMap>
+
+
+	
+
+	
+	<resultMap type="User" id="UserMap">
+	<id property="u_id" column="u_id"/>
+		<result property="u_password" column="u_password"/>
+		<result property="u_name" column="u_name"/>
+		<result property="u_weuxin_key" column="u_weuxin_key"/>
+		<result property="a_id" column="a_id"/>
+		<result property="u_phone" column="u_phone"/>
+	</resultMap>
+	
+	<resultMap type="ProdunctionOrderRelation" id="ProdunctionOrderRelationMapper">
+		<id property="id" column="po_id"/>
+		<result property="num" column="pt_num"/>
+		<association property="production" resultMap="com.sinocat.mapper.ProductionMapper.productionMap"/>
+		<association property="order" resultMap="OrderMap"></association>
+	</resultMap>
+		<resultMap type="Order" id="OrderMap">
+	<id property="id" column="o_id"/>
+	<result property="totalPrice" column="o_totalprice"/>
+	<association property="address" resultMap="AddressMap" ></association>
+	<association property="user" resultMap="UserMap"></association>
+	<collection property="produtionList" ofType="ProdunctionOrderRelation" resultMap="ProdunctionOrderRelationMappers">
+	</collection>
+	</resultMap> 
+	<select id="getOrderByUserId" parameterType="String" resultMap="Order">
+		SELECT o_id,u_id,a_id,o_totalprice FROM orders WHERE u_id=#{id}
+	</select>
+	<select id="getOrderInfoByOrderId" parameterType="String" resultMap="Order">
+	SELECT po_id,production.p_id,pt_num,p_name,p_price,p_image
+	FROM production_order_relation,production
+	WHERE production_order_relation.o_id AND production.p_id=production_order_relation.p_id
+	</select>
+</mapper>
